@@ -41,6 +41,36 @@ export default function Spreadsheet() {
           })}
         </tbody>
       </table>
+      <button
+        onClick={() => {
+          setCellContents([
+            ...cellContents,
+            Array(cellContents[0].length).fill(0),
+          ]);
+        }}
+      >
+        + 行
+      </button>
+      <button
+        onClick={() => {
+          setCellContents(cellContents.slice(0, -1));
+        }}
+      >
+        - 行
+      </button>
+      <br />
+      <button
+        onClick={() => setCellContents(cellContents.map((row) => [...row, 0]))}
+      >
+        + 列
+      </button>
+      <button
+        onClick={() =>
+          setCellContents(cellContents.map((row) => row.slice(0, -1)))
+        }
+      >
+        - 列
+      </button>
     </>
   );
 }
