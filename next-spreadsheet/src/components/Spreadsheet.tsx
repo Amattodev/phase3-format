@@ -21,12 +21,20 @@ export default function Spreadsheet() {
             <th>B</th>
             <th>C</th>
           </tr>
-          {cellContents.map((row, index) => {
+          {cellContents.map((row, rowIndex) => {
+            console.log(cellContents);
             return (
               <tr>
-                <th>{index + 1}</th>
-                {row.map((cell) => (
-                  <Cell content={cell} />
+                <th>{rowIndex + 1}</th>
+                {row.map((cell, cellIndex) => (
+                  <Cell
+                    content={cell}
+                    onChange={(updated: Cellcontent) => {
+                      const updatedCellContents = [...cellContents];
+                      updatedCellContents[rowIndex][cellIndex] = updated;
+                      setCellContents(updatedCellContents);
+                    }}
+                  />
                 ))}
               </tr>
             );
