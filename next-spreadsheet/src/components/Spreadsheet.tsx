@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cell from "./Cell";
 import { Cellcontent } from "@/types/spreadsheet";
 
@@ -10,6 +10,18 @@ export default function Spreadsheet() {
     [10, 11, 12],
   ]);
 
+  const persist = () => {
+    const data = JSON.stringify(cellContents);
+    window.localStorage.setItem("cells", data);
+  };
+
+  useEffect(() => {
+    const persistedData = window.localStorage.getItem("cells");
+    if (persistedData) {
+      setCellContents(JSON.parse(persistedData));
+    }
+  }, []);
+
   return (
     <>
       <p>ここにスプレッドシートを作成します。</p>
@@ -17,9 +29,9 @@ export default function Spreadsheet() {
         <tbody>
           <tr>
             <th></th>
-            <th>A</th>
-            <th>B</th>
-            <th>C</th>
+            {cellContents[0].map((cell, i) => (
+              <th>{String.fromCharCode(65 + i)}</th>
+            ))}
           </tr>
           {cellContents.map((row, rowIndex) => {
             console.log(cellContents);
@@ -71,6 +83,8 @@ export default function Spreadsheet() {
       >
         - 列
       </button>
+      <br />
+      <button onClick={persist}>Save</button>
     </>
   );
 }
