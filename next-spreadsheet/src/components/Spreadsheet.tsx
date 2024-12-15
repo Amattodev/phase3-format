@@ -11,15 +11,32 @@ export default function Spreadsheet() {
   ]);
 
   const persist = () => {
-    const data = JSON.stringify(cellContents);
-    window.localStorage.setItem("cells", data);
+    //ローカルストレージによるリクエスト
+    // const data = JSON.stringify(cellContents);
+    // window.localStorage.setItem("cells", data);
+    //エンドポイントを呼び出したもの
+    fetch("/api/cells", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ cells: cellContents }),
+    });
   };
 
   useEffect(() => {
-    const persistedData = window.localStorage.getItem("cells");
-    if (persistedData) {
-      setCellContents(JSON.parse(persistedData));
-    }
+    //ローカルストレージによるリクエスト
+    // const persistedData = window.localStorage.getItem("cells");
+    // if (persistedData) {
+    //   setCellContents(JSON.parse(persistedData));
+    // }
+    //エンドポイントを呼び出したもの
+    fetch("/api/cells").then((res) =>
+      res.text().then((s) => {
+        const data = JSON.parse(s);
+        if (data.cells) {
+          setCellContents(data.cells);
+        }
+      })
+    );
   }, []);
 
   return (
