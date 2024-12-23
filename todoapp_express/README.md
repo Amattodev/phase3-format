@@ -5,3 +5,9 @@
 　- Typescript → Javaescript へ変換　 → Express で立ち上げ
 　- コンパイルで面倒
 ・nodemon で TypeScript を監視し、自動変換
+
+# ローカル立ち上げ時
+
+・node src/server/index.js でローカル環境立ち上げ
+・npx nodemon でコンパイル可能
+・以降、自動セーブで自動コンパイル可能（リロードする必要あり）
